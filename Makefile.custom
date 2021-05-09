@@ -3,10 +3,13 @@ CUDA_VERSION:=$(shell /opt/cuda/bin/nvcc --version | grep -oP '(?<=Build cuda_)\
 NEWURL = $(eval export NEWURL:=file://$(CURRDIR)/cuda-$(CUDA_VERSION).tar.gz)
 
 download:
-	-@rm cuda*\.tar.gz; \
-	@rm CMakeLists.txt; \
+	-@rm CMakeLists.txt; \
 	curl --location https://raw.githubusercontent.com/insilications/cuda-clr/master/CMakeLists.txt -o CMakeLists.txt; \
-	tar --exclude=doc --exclude=compute-sanitizer/docs --exclude=cuda/samples --exclude=nsight-systems-* --exclude=nsight-compute-* --exclude=nsightee_plugins --exclude=Sanitizer --exclude=extras/CUPTI/samples --exclude=extras/demo_suite --exclude=libnvvp --exclude=nvvm/libnvvm-samples --exclude=nvml/example --exclude=tools/CUDA_Occupancy_Calculator.xls --create --verbose --add-file=CMakeLists.txt --gzip --file=cuda-$(CUDA_VERSION).tar.gz /opt/cuda/;
+	if compgen -G "cuda-*.tar.gz" > /dev/null; then \
+		echo "File already exists"; \
+	else \
+		tar --exclude=doc --exclude=compute-sanitizer/docs --exclude=cuda/samples --exclude=nsight-systems-* --exclude=nsight-compute-* --exclude=nsightee_plugins --exclude=Sanitizer --exclude=extras/CUPTI/samples --exclude=extras/demo_suite --exclude=libnvvp --exclude=nvvm/libnvvm-samples --exclude=nvml/example --exclude=tools/CUDA_Occupancy_Calculator.xls --create --verbose --add-file=CMakeLists.txt --gzip --file=cuda-$(CUDA_VERSION).tar.gz /opt/cuda/; \
+	fi;
 
 preautospec-checks: download
 	$(NEWURL)

@@ -4,10 +4,10 @@
 #
 %define keepstatic 1
 Name     : cuda
-Version  : 11.2
+Version  : 11.3
 Release  : 16
-URL      : file:///aot/build/clearlinux/packages/cuda/cuda-11.2.tar.gz
-Source0  : file:///aot/build/clearlinux/packages/cuda/cuda-11.2.tar.gz
+URL      : file:///aot/build/clearlinux/packages/cuda/cuda-11.3.tar.gz
+Source0  : file:///aot/build/clearlinux/packages/cuda/cuda-11.3.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0
@@ -102,8 +102,8 @@ staticdev components for the cuda package.
 
 
 %prep
-%setup -q -c -n cuda-11.2.tar
-cd %{_builddir}/cuda-11.2.tar
+%setup -q -c -n cuda-11.3.tar
+cd %{_builddir}/cuda-11.3.tar
 
 %build
 unset http_proxy
@@ -111,7 +111,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1617784027
+export SOURCE_DATE_EPOCH=1620553940
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -127,7 +127,7 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1617784027
+export SOURCE_DATE_EPOCH=1620553940
 rm -rf %{buildroot}
 pushd clr-build
 %make_install
@@ -158,7 +158,7 @@ popd
 /usr/cuda/bin/cu++filt
 /usr/cuda/bin/cuda-gdb
 /usr/cuda/bin/cuda-gdbserver
-/usr/cuda/bin/cuda-install-samples-11.2.sh
+/usr/cuda/bin/cuda-install-samples-11.3.sh
 /usr/cuda/bin/cuda-memcheck
 /usr/cuda/bin/cuda-uninstaller
 /usr/cuda/bin/cudafe++
@@ -238,6 +238,7 @@ popd
 /usr/cuda/compute-sanitizer/include/generated_cuda_runtime_api_meta.h
 /usr/cuda/compute-sanitizer/include/generated_cuda_vdpau_interop_meta.h
 /usr/cuda/compute-sanitizer/include/sanitizer.h
+/usr/cuda/compute-sanitizer/include/sanitizer_barrier.h
 /usr/cuda/compute-sanitizer/include/sanitizer_callbacks.h
 /usr/cuda/compute-sanitizer/include/sanitizer_driver_cbid.h
 /usr/cuda/compute-sanitizer/include/sanitizer_memory.h
@@ -262,6 +263,8 @@ popd
 /usr/cuda/extras/CUPTI/include/cupti_events.h
 /usr/cuda/extras/CUPTI/include/cupti_metrics.h
 /usr/cuda/extras/CUPTI/include/cupti_nvtx_cbid.h
+/usr/cuda/extras/CUPTI/include/cupti_pcsampling.h
+/usr/cuda/extras/CUPTI/include/cupti_pcsampling_util.h
 /usr/cuda/extras/CUPTI/include/cupti_profiler_target.h
 /usr/cuda/extras/CUPTI/include/cupti_result.h
 /usr/cuda/extras/CUPTI/include/cupti_runtime_cbid.h
@@ -280,6 +283,7 @@ popd
 /usr/cuda/extras/CUPTI/lib64/libcupti.so
 /usr/cuda/extras/CUPTI/lib64/libnvperf_host.so
 /usr/cuda/extras/CUPTI/lib64/libnvperf_target.so
+/usr/cuda/extras/CUPTI/lib64/libpcsamplingutil.so
 /usr/cuda/extras/Debugger/Readme.txt
 /usr/cuda/extras/Debugger/include/cuda_stdint.h
 /usr/cuda/extras/Debugger/include/cudacoredump.h
@@ -358,6 +362,8 @@ popd
 /usr/cuda/targets/x86_64-linux/include/cuComplex.h
 /usr/cuda/targets/x86_64-linux/include/cub/agent/agent_histogram.cuh
 /usr/cuda/targets/x86_64-linux/include/cub/agent/agent_radix_sort_downsweep.cuh
+/usr/cuda/targets/x86_64-linux/include/cub/agent/agent_radix_sort_histogram.cuh
+/usr/cuda/targets/x86_64-linux/include/cub/agent/agent_radix_sort_onesweep.cuh
 /usr/cuda/targets/x86_64-linux/include/cub/agent/agent_radix_sort_upsweep.cuh
 /usr/cuda/targets/x86_64-linux/include/cub/agent/agent_reduce.cuh
 /usr/cuda/targets/x86_64-linux/include/cub/agent/agent_reduce_by_key.cuh
@@ -379,6 +385,7 @@ popd
 /usr/cuda/targets/x86_64-linux/include/cub/block/block_scan.cuh
 /usr/cuda/targets/x86_64-linux/include/cub/block/block_shuffle.cuh
 /usr/cuda/targets/x86_64-linux/include/cub/block/block_store.cuh
+/usr/cuda/targets/x86_64-linux/include/cub/block/radix_rank_sort_operations.cuh
 /usr/cuda/targets/x86_64-linux/include/cub/block/specializations/block_histogram_atomic.cuh
 /usr/cuda/targets/x86_64-linux/include/cub/block/specializations/block_histogram_sort.cuh
 /usr/cuda/targets/x86_64-linux/include/cub/block/specializations/block_reduce_raking.cuh
@@ -388,6 +395,8 @@ popd
 /usr/cuda/targets/x86_64-linux/include/cub/block/specializations/block_scan_warp_scans.cuh
 /usr/cuda/targets/x86_64-linux/include/cub/block/specializations/block_scan_warp_scans2.cuh
 /usr/cuda/targets/x86_64-linux/include/cub/block/specializations/block_scan_warp_scans3.cuh
+/usr/cuda/targets/x86_64-linux/include/cub/cmake/cub-config-version.cmake
+/usr/cuda/targets/x86_64-linux/include/cub/cmake/cub-config.cmake
 /usr/cuda/targets/x86_64-linux/include/cub/config.cuh
 /usr/cuda/targets/x86_64-linux/include/cub/cub.cuh
 /usr/cuda/targets/x86_64-linux/include/cub/device/device_histogram.cuh
@@ -460,9 +469,12 @@ popd
 /usr/cuda/targets/x86_64-linux/include/cuda/std/atomic
 /usr/cuda/targets/x86_64-linux/include/cuda/std/barrier
 /usr/cuda/targets/x86_64-linux/include/cuda/std/cassert
+/usr/cuda/targets/x86_64-linux/include/cuda/std/ccomplex
 /usr/cuda/targets/x86_64-linux/include/cuda/std/cfloat
 /usr/cuda/targets/x86_64-linux/include/cuda/std/chrono
 /usr/cuda/targets/x86_64-linux/include/cuda/std/climits
+/usr/cuda/targets/x86_64-linux/include/cuda/std/cmath
+/usr/cuda/targets/x86_64-linux/include/cuda/std/complex
 /usr/cuda/targets/x86_64-linux/include/cuda/std/cstddef
 /usr/cuda/targets/x86_64-linux/include/cuda/std/cstdint
 /usr/cuda/targets/x86_64-linux/include/cuda/std/ctime
@@ -633,6 +645,7 @@ popd
 /usr/cuda/targets/x86_64-linux/include/cuda/std/detail/libcxx/include/support/solaris/floatingpoint.h
 /usr/cuda/targets/x86_64-linux/include/cuda/std/detail/libcxx/include/support/solaris/wchar.h
 /usr/cuda/targets/x86_64-linux/include/cuda/std/detail/libcxx/include/support/solaris/xlocale.h
+/usr/cuda/targets/x86_64-linux/include/cuda/std/detail/libcxx/include/support/win32/atomic_msvc.h
 /usr/cuda/targets/x86_64-linux/include/cuda/std/detail/libcxx/include/support/win32/limits_msvc_win32.h
 /usr/cuda/targets/x86_64-linux/include/cuda/std/detail/libcxx/include/support/win32/locale_win32.h
 /usr/cuda/targets/x86_64-linux/include/cuda/std/detail/libcxx/include/support/xlocale/__nop_locale_mgmt.h
@@ -664,9 +677,14 @@ popd
 /usr/cuda/targets/x86_64-linux/include/cuda/std/utility
 /usr/cuda/targets/x86_64-linux/include/cuda/std/version
 /usr/cuda/targets/x86_64-linux/include/cudaEGL.h
+/usr/cuda/targets/x86_64-linux/include/cudaEGLTypedefs.h
 /usr/cuda/targets/x86_64-linux/include/cudaGL.h
+/usr/cuda/targets/x86_64-linux/include/cudaGLTypedefs.h
 /usr/cuda/targets/x86_64-linux/include/cudaProfiler.h
+/usr/cuda/targets/x86_64-linux/include/cudaProfilerTypedefs.h
+/usr/cuda/targets/x86_64-linux/include/cudaTypedefs.h
 /usr/cuda/targets/x86_64-linux/include/cudaVDPAU.h
+/usr/cuda/targets/x86_64-linux/include/cudaVDPAUTypedefs.h
 /usr/cuda/targets/x86_64-linux/include/cuda_awbarrier.h
 /usr/cuda/targets/x86_64-linux/include/cuda_awbarrier_helpers.h
 /usr/cuda/targets/x86_64-linux/include/cuda_awbarrier_primitives.h
@@ -725,8 +743,6 @@ popd
 /usr/cuda/targets/x86_64-linux/include/device_types.h
 /usr/cuda/targets/x86_64-linux/include/driver_functions.h
 /usr/cuda/targets/x86_64-linux/include/driver_types.h
-/usr/cuda/targets/x86_64-linux/include/fatBinaryCtl.h
-/usr/cuda/targets/x86_64-linux/include/fatbinary.h
 /usr/cuda/targets/x86_64-linux/include/fatbinary_section.h
 /usr/cuda/targets/x86_64-linux/include/host_config.h
 /usr/cuda/targets/x86_64-linux/include/host_defines.h
@@ -818,6 +834,10 @@ popd
 /usr/cuda/targets/x86_64-linux/include/thrust/async/sort.h
 /usr/cuda/targets/x86_64-linux/include/thrust/async/transform.h
 /usr/cuda/targets/x86_64-linux/include/thrust/binary_search.h
+/usr/cuda/targets/x86_64-linux/include/thrust/cmake/FindTBB.cmake
+/usr/cuda/targets/x86_64-linux/include/thrust/cmake/README.md
+/usr/cuda/targets/x86_64-linux/include/thrust/cmake/thrust-config-version.cmake
+/usr/cuda/targets/x86_64-linux/include/thrust/cmake/thrust-config.cmake
 /usr/cuda/targets/x86_64-linux/include/thrust/complex.h
 /usr/cuda/targets/x86_64-linux/include/thrust/copy.h
 /usr/cuda/targets/x86_64-linux/include/thrust/count.h
@@ -1653,21 +1673,12 @@ popd
 /usr/cuda/targets/x86_64-linux/lib/libnvjpeg.so
 /usr/cuda/targets/x86_64-linux/lib/libnvrtc-builtins.so
 /usr/cuda/targets/x86_64-linux/lib/libnvrtc.so
-
-%files lib
-%defattr(-,root,root,-)
-/usr/cuda/extras/CUPTI/lib64/libcupti.so.11.2
-/usr/cuda/extras/CUPTI/lib64/libcupti.so.2020.3.1
-/usr/cuda/nvvm-prev/lib64/libnvvm.so.3
-/usr/cuda/nvvm-prev/lib64/libnvvm.so.3.3.0
-/usr/cuda/nvvm/lib64/libnvvm.so.4
-/usr/cuda/nvvm/lib64/libnvvm.so.4.0.0
 /usr/cuda/targets/x86_64-linux/lib/nvrtc-prev/libnvrtc-builtins.so
-/usr/cuda/targets/x86_64-linux/lib/nvrtc-prev/libnvrtc-builtins.so.11.2
-/usr/cuda/targets/x86_64-linux/lib/nvrtc-prev/libnvrtc-builtins.so.11.2.152
+/usr/cuda/targets/x86_64-linux/lib/nvrtc-prev/libnvrtc-builtins.so.11.3
+/usr/cuda/targets/x86_64-linux/lib/nvrtc-prev/libnvrtc-builtins.so.11.3.58
 /usr/cuda/targets/x86_64-linux/lib/nvrtc-prev/libnvrtc.so
 /usr/cuda/targets/x86_64-linux/lib/nvrtc-prev/libnvrtc.so.11.2
-/usr/cuda/targets/x86_64-linux/lib/nvrtc-prev/libnvrtc.so.11.2.152
+/usr/cuda/targets/x86_64-linux/lib/nvrtc-prev/libnvrtc.so.11.3.58
 /usr/cuda/targets/x86_64-linux/lib/stubs/libcublas.so
 /usr/cuda/targets/x86_64-linux/lib/stubs/libcublasLt.so
 /usr/cuda/targets/x86_64-linux/lib/stubs/libcuda.so
@@ -1692,65 +1703,74 @@ popd
 /usr/cuda/targets/x86_64-linux/lib/stubs/libnvjpeg.so
 /usr/cuda/targets/x86_64-linux/lib/stubs/libnvrtc.so
 
+%files lib
+%defattr(-,root,root,-)
+/usr/cuda/extras/CUPTI/lib64/libcupti.so.11.3
+/usr/cuda/extras/CUPTI/lib64/libcupti.so.2021.1.0
+/usr/cuda/nvvm-prev/lib64/libnvvm.so.3
+/usr/cuda/nvvm-prev/lib64/libnvvm.so.3.3.0
+/usr/cuda/nvvm/lib64/libnvvm.so.4
+/usr/cuda/nvvm/lib64/libnvvm.so.4.0.0
+
 %files plugins
 %defattr(-,root,root,-)
 /usr/cuda/targets/x86_64-linux/lib/libOpenCL.so.1
 /usr/cuda/targets/x86_64-linux/lib/libOpenCL.so.1.0
 /usr/cuda/targets/x86_64-linux/lib/libOpenCL.so.1.0.0
-/usr/cuda/targets/x86_64-linux/lib/libaccinj64.so.11.2
-/usr/cuda/targets/x86_64-linux/lib/libaccinj64.so.11.2.152
+/usr/cuda/targets/x86_64-linux/lib/libaccinj64.so.11.3
+/usr/cuda/targets/x86_64-linux/lib/libaccinj64.so.11.3.58
 /usr/cuda/targets/x86_64-linux/lib/libcublas.so.11
-/usr/cuda/targets/x86_64-linux/lib/libcublas.so.11.4.1.1043
+/usr/cuda/targets/x86_64-linux/lib/libcublas.so.11.4.2.10064
 /usr/cuda/targets/x86_64-linux/lib/libcublasLt.so.11
-/usr/cuda/targets/x86_64-linux/lib/libcublasLt.so.11.4.1.1043
+/usr/cuda/targets/x86_64-linux/lib/libcublasLt.so.11.4.2.10064
 /usr/cuda/targets/x86_64-linux/lib/libcudart.so.11.0
-/usr/cuda/targets/x86_64-linux/lib/libcudart.so.11.2.152
+/usr/cuda/targets/x86_64-linux/lib/libcudart.so.11.3.58
 /usr/cuda/targets/x86_64-linux/lib/libcufft.so.10
-/usr/cuda/targets/x86_64-linux/lib/libcufft.so.10.4.1.152
+/usr/cuda/targets/x86_64-linux/lib/libcufft.so.10.4.2.58
 /usr/cuda/targets/x86_64-linux/lib/libcufftw.so.10
-/usr/cuda/targets/x86_64-linux/lib/libcufftw.so.10.4.1.152
-/usr/cuda/targets/x86_64-linux/lib/libcuinj64.so.11.2
-/usr/cuda/targets/x86_64-linux/lib/libcuinj64.so.11.2.152
+/usr/cuda/targets/x86_64-linux/lib/libcufftw.so.10.4.2.58
+/usr/cuda/targets/x86_64-linux/lib/libcuinj64.so.11.3
+/usr/cuda/targets/x86_64-linux/lib/libcuinj64.so.11.3.58
 /usr/cuda/targets/x86_64-linux/lib/libcurand.so.10
-/usr/cuda/targets/x86_64-linux/lib/libcurand.so.10.2.3.152
+/usr/cuda/targets/x86_64-linux/lib/libcurand.so.10.2.4.58
 /usr/cuda/targets/x86_64-linux/lib/libcusolver.so.11
-/usr/cuda/targets/x86_64-linux/lib/libcusolver.so.11.1.0.152
+/usr/cuda/targets/x86_64-linux/lib/libcusolver.so.11.1.1.58
 /usr/cuda/targets/x86_64-linux/lib/libcusolverMg.so.11
-/usr/cuda/targets/x86_64-linux/lib/libcusolverMg.so.11.1.0.152
+/usr/cuda/targets/x86_64-linux/lib/libcusolverMg.so.11.1.1.58
 /usr/cuda/targets/x86_64-linux/lib/libcusparse.so.11
-/usr/cuda/targets/x86_64-linux/lib/libcusparse.so.11.4.1.1152
+/usr/cuda/targets/x86_64-linux/lib/libcusparse.so.11.5.0.58
 /usr/cuda/targets/x86_64-linux/lib/libnppc.so.11
-/usr/cuda/targets/x86_64-linux/lib/libnppc.so.11.3.2.152
+/usr/cuda/targets/x86_64-linux/lib/libnppc.so.11.3.3.44
 /usr/cuda/targets/x86_64-linux/lib/libnppial.so.11
-/usr/cuda/targets/x86_64-linux/lib/libnppial.so.11.3.2.152
+/usr/cuda/targets/x86_64-linux/lib/libnppial.so.11.3.3.44
 /usr/cuda/targets/x86_64-linux/lib/libnppicc.so.11
-/usr/cuda/targets/x86_64-linux/lib/libnppicc.so.11.3.2.152
+/usr/cuda/targets/x86_64-linux/lib/libnppicc.so.11.3.3.44
 /usr/cuda/targets/x86_64-linux/lib/libnppidei.so.11
-/usr/cuda/targets/x86_64-linux/lib/libnppidei.so.11.3.2.152
+/usr/cuda/targets/x86_64-linux/lib/libnppidei.so.11.3.3.44
 /usr/cuda/targets/x86_64-linux/lib/libnppif.so.11
-/usr/cuda/targets/x86_64-linux/lib/libnppif.so.11.3.2.152
+/usr/cuda/targets/x86_64-linux/lib/libnppif.so.11.3.3.44
 /usr/cuda/targets/x86_64-linux/lib/libnppig.so.11
-/usr/cuda/targets/x86_64-linux/lib/libnppig.so.11.3.2.152
+/usr/cuda/targets/x86_64-linux/lib/libnppig.so.11.3.3.44
 /usr/cuda/targets/x86_64-linux/lib/libnppim.so.11
-/usr/cuda/targets/x86_64-linux/lib/libnppim.so.11.3.2.152
+/usr/cuda/targets/x86_64-linux/lib/libnppim.so.11.3.3.44
 /usr/cuda/targets/x86_64-linux/lib/libnppist.so.11
-/usr/cuda/targets/x86_64-linux/lib/libnppist.so.11.3.2.152
+/usr/cuda/targets/x86_64-linux/lib/libnppist.so.11.3.3.44
 /usr/cuda/targets/x86_64-linux/lib/libnppisu.so.11
-/usr/cuda/targets/x86_64-linux/lib/libnppisu.so.11.3.2.152
+/usr/cuda/targets/x86_64-linux/lib/libnppisu.so.11.3.3.44
 /usr/cuda/targets/x86_64-linux/lib/libnppitc.so.11
-/usr/cuda/targets/x86_64-linux/lib/libnppitc.so.11.3.2.152
+/usr/cuda/targets/x86_64-linux/lib/libnppitc.so.11.3.3.44
 /usr/cuda/targets/x86_64-linux/lib/libnpps.so.11
-/usr/cuda/targets/x86_64-linux/lib/libnpps.so.11.3.2.152
+/usr/cuda/targets/x86_64-linux/lib/libnpps.so.11.3.3.44
 /usr/cuda/targets/x86_64-linux/lib/libnvToolsExt.so.1
 /usr/cuda/targets/x86_64-linux/lib/libnvToolsExt.so.1.0.0
 /usr/cuda/targets/x86_64-linux/lib/libnvblas.so.11
-/usr/cuda/targets/x86_64-linux/lib/libnvblas.so.11.4.1.1043
+/usr/cuda/targets/x86_64-linux/lib/libnvblas.so.11.4.2.10064
 /usr/cuda/targets/x86_64-linux/lib/libnvjpeg.so.11
-/usr/cuda/targets/x86_64-linux/lib/libnvjpeg.so.11.4.0.152
-/usr/cuda/targets/x86_64-linux/lib/libnvrtc-builtins.so.11.2
-/usr/cuda/targets/x86_64-linux/lib/libnvrtc-builtins.so.11.2.152
+/usr/cuda/targets/x86_64-linux/lib/libnvjpeg.so.11.4.1.58
+/usr/cuda/targets/x86_64-linux/lib/libnvrtc-builtins.so.11.3
+/usr/cuda/targets/x86_64-linux/lib/libnvrtc-builtins.so.11.3.58
 /usr/cuda/targets/x86_64-linux/lib/libnvrtc.so.11.2
-/usr/cuda/targets/x86_64-linux/lib/libnvrtc.so.11.2.152
+/usr/cuda/targets/x86_64-linux/lib/libnvrtc.so.11.3.58
 
 %files staticdev
 %defattr(-,root,root,-)
